@@ -244,12 +244,12 @@ public class RegistrationFrame extends javax.swing.JFrame {
                     
                 try{
                     result1=UsersDAO.userIdExists(uid);
-                    if(result1){
+                    if(!result1){
                         //JOptionPane.showMessageDialog(null, "Welcome to our App","Hello"+uid,JOptionPane.INFORMATION_MESSAGE);
                 
                         try{
                             result2=UserInfoDAO.userNameExists(uname);
-                                if(result2){
+                                if(!result2){
                                     boolean a=UsersDAO.addUsers(u);
                                     boolean b=UserInfoDAO.addUserInfo(uinfo);
                                     if(a&&b) {
