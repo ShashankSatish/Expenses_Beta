@@ -17,8 +17,10 @@ import java.sql.SQLException;
  * @author Maraxys
  */
 public class UsersDAO {
+    public static Connection conn;
+    
     public static boolean ValidateUserLogin(Users u) throws SQLException {
-        Connection conn=DBConnExp.getConnection();
+        conn=DBConnExp.getConnection();
         PreparedStatement ps=conn.prepareStatement("select * from users where user_id=? and password=?");    
         
             ps.setString(1,u.getUserId());
@@ -34,20 +36,31 @@ public class UsersDAO {
     
     }
     
-    public static boolean addUsers(Users u) throws SQLException {
-        Connection conn=DBConnExp.getConnection();
+    public static boolean userIdExists(String uid) throws SQLException {
+        conn=DBConnExp.getConnection();
         PreparedStatement ps=conn.prepareStatement("select * from users where user_id=?");
-        ps.setString(1,u.getUserId());
+            ps.setString(1, uid);
         ResultSet rs=ps.executeQuery();
         if(rs.next()){
             return false;
         }
         else {
-            ps=conn.prepareStatement("insert into users values(?,?)");
+            return true;
+        }
+    }
+    
+    public static boolean addUsers(Users u) throws SQLException {
+        Connection conn=DBConnExp.getConnection();
+        
+            PreparedStatement ps=conn.prepareStatement("insert into users values(?,?)");
                 ps.setString(1,u.getUserId());
                 ps.setString(2,u.getPassword());
-            ps.executeUpdate();
-        }
-        return true;
+            int ans=ps.executeUpdate();
+            if(ans!=0){
+                return true;
+            }
+            else {
+                return false;
+            }
     }
 }
