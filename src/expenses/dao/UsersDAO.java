@@ -42,10 +42,10 @@ public class UsersDAO {
             ps.setString(1, uid);
         ResultSet rs=ps.executeQuery();
         if(rs.next()){
-            return false;
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }
     
