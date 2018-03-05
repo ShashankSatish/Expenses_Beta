@@ -10,7 +10,21 @@ package expenses.pojo;
  * @author Maraxys
  */
 public class Categories {
+    
     private String userId;
+    private double budget;
+    private double shopping;
+    private double travel;
+    private double bills;
+    private double grocery;
+    private double health;
+    private double eatout;
+    private double entertain;
+    private double other;
+    private double groupexp;
+    private double gifts;
+    private double clothes;
+    
 
     public String getUserId() {
         return userId;
@@ -115,16 +129,5 @@ public class Categories {
     public void setClothes(double clothes) {
         this.clothes = clothes;
     }
-    private double budget;
-    private double shopping;
-    private double travel;
-    private double bills;
-    private double grocery;
-    private double health;
-    private double eatout;
-    private double entertain;
-    private double other;
-    private double groupexp;
-    private double gifts;
-    private double clothes;
+    
 }
