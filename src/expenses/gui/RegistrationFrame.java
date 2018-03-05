@@ -6,6 +6,11 @@
 package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
+import expenses.dao.UserInfoDAO;
+import expenses.dao.UsersDAO;
+import expenses.pojo.UserInfo;
+import expenses.pojo.Users;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,7 +22,10 @@ public class RegistrationFrame extends javax.swing.JFrame {
     /**
      * Creates new form RegistrationFrame
      */
-    private int cbAge;
+    private int cbAge,budget;
+    private String uname,uGender,uid,pwd;
+    private boolean result1,result2;
+    
     public RegistrationFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
@@ -207,7 +215,7 @@ public class RegistrationFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Enter values within 100-100000","Invalid Range",JOptionPane.ERROR_MESSAGE);
             }
             else{
-                String uGender=getGender();
+                uGender=getGender();
                 if(uGender==null){
                     JOptionPane.showMessageDialog(null, "Please select a Gender","Select One",JOptionPane.ERROR_MESSAGE);
                     return;
@@ -219,7 +227,60 @@ public class RegistrationFrame extends javax.swing.JFrame {
                     return;
                 }
                 
-                JOptionPane.showMessageDialog(null, "Your age is "+cbAge,"Invalid Range",JOptionPane.ERROR_MESSAGE);
+                uid=txtLoginId.getText();
+                pwd=String.valueOf(txtPassword.getPassword());
+                uname=txtUsername.getText();
+                budget=Integer.parseInt(txtBudget.getText());
+                
+                Users u=new Users();
+                    u.setUserId(uid);
+                    u.setPassword(pwd);
+                    
+                UserInfo uinfo=new UserInfo();
+                    uinfo.setUserId(uid);
+                    uinfo.setName(uname);
+                    uinfo.setGender(uGender);
+                    uinfo.setAge(cbAge);
+                    
+                try{
+                    result1=UsersDAO.userIdExists(uid);
+                    if(result1){
+                        //JOptionPane.showMessageDialog(null, "Welcome to our App","Hello"+uid,JOptionPane.INFORMATION_MESSAGE);
+                
+                        try{
+                            result2=UserInfoDAO.userNameExists(uname);
+                                if(result2){
+                                    boolean a=UsersDAO.addUsers(u);
+                                    boolean b=UserInfoDAO.addUserInfo(uinfo);
+                                    if(a&&b) {
+                                        JOptionPane.showMessageDialog(null, "Your info has been added","Welcome to our app "+uname,JOptionPane.INFORMATION_MESSAGE);
+                                    }
+                                    else {
+                                    JOptionPane.showMessageDialog(null, "Your account could not be created","Sorry! Please try again!",JOptionPane.ERROR_MESSAGE);
+                                    }
+                                }
+                                else{
+                                    JOptionPane.showMessageDialog(null, "Please try another name","User name already exists",JOptionPane.ERROR_MESSAGE);
+                                }        
+                        }
+                        catch(SQLException ex) {
+                            JOptionPane.showMessageDialog(null, "Could not update user_info table ","SQL Exception",JOptionPane.ERROR_MESSAGE);
+                            ex.printStackTrace();
+                        }
+                    }
+                    
+                    else{
+                        JOptionPane.showMessageDialog(null, "Please input another User ID","User id already exists",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }    
+                catch(SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Could not update users table ","SQL Exception",JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+                
+                
+                
             }
                
     }//GEN-LAST:event_btnSaveRegisterActionPerformed
@@ -362,6 +423,7 @@ public class RegistrationFrame extends javax.swing.JFrame {
             if(selectedIndex==0) {
                 return 0;
             }
+            //System.out.println("Age"+jcAge.getSelectedItem());
             return (Integer.parseInt(jcAge.getSelectedItem().toString()));
     }
 }
