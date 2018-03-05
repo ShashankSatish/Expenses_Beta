@@ -33,4 +33,21 @@ public class UsersDAO {
         }
     
     }
+    
+    public static boolean addUsers(Users u) throws SQLException {
+        Connection conn=DBConnExp.getConnection();
+        PreparedStatement ps=conn.prepareStatement("select * from users where user_id=?");
+        ps.setString(1,u.getUserId());
+        ResultSet rs=ps.executeQuery();
+        if(rs.next()){
+            return false;
+        }
+        else {
+            ps=conn.prepareStatement("insert into users values(?,?)");
+                ps.setString(1,u.getUserId());
+                ps.setString(2,u.getPassword());
+            ps.executeUpdate();
+        }
+        return true;
+    }
 }
