@@ -6,6 +6,7 @@
 package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
+import expenses.dao.CategoriesDAO;
 import expenses.dao.UserInfoDAO;
 import expenses.dao.UsersDAO;
 import expenses.pojo.UserInfo;
@@ -250,9 +251,12 @@ public class RegistrationFrame extends javax.swing.JFrame {
                         try{
                             result2=UserInfoDAO.userNameExists(uname);
                                 if(!result2){
-                                    boolean a=UsersDAO.addUsers(u);
-                                    boolean b=UserInfoDAO.addUserInfo(uinfo);
+                                    boolean a,b;
+                                    a=UsersDAO.addUsers(u);
+                                    b=UserInfoDAO.addUserInfo(uinfo);
+                                    
                                     if(a&&b) {
+                                        CategoriesDAO.addToCat(uid, budget);
                                         JOptionPane.showMessageDialog(null, "Your info has been added","Welcome to our app "+uname,JOptionPane.INFORMATION_MESSAGE);
                                     }
                                     else {
