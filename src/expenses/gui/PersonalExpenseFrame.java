@@ -26,6 +26,7 @@ public class PersonalExpenseFrame extends javax.swing.JFrame {
     public PersonalExpenseFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
+        display();
         
         //super.setLocation(340, 0);
     }

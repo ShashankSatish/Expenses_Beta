@@ -121,6 +121,11 @@ public class UserDashboardFrame extends javax.swing.JFrame {
         );
 
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -199,6 +204,13 @@ public class UserDashboardFrame extends javax.swing.JFrame {
         loginfrm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblBackMouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        PersonalExpenseFrame pef=new PersonalExpenseFrame();
+        pef.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel5MouseClicked
 
     /**
      * @param args the command line arguments
