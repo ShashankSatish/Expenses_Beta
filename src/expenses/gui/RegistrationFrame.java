@@ -257,7 +257,10 @@ public class RegistrationFrame extends javax.swing.JFrame {
                                     
                                     if(a&&b) {
                                         CategoriesDAO.addToCat(uid, budget);
-                                        JOptionPane.showMessageDialog(null, "Your info has been added","Welcome to our app "+uname,JOptionPane.INFORMATION_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "Your info has been added suceesfully..","Welcome to our app "+uname,JOptionPane.INFORMATION_MESSAGE);
+                                        UserLoginFrame frame=new UserLoginFrame();
+                                            frame.setVisible(true);
+                                            this.dispose();
                                     }
                                     else {
                                     JOptionPane.showMessageDialog(null, "Your account could not be created","Sorry! Please try again!",JOptionPane.ERROR_MESSAGE);
