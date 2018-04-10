@@ -6,6 +6,7 @@
 package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +22,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     double num1,ans;
     boolean isSelected=false;
     boolean isResult=false;
+    String temp;
     public InputCalculatorFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
@@ -36,7 +38,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblBack = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -59,33 +61,41 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         btn6 = new javax.swing.JButton();
         txtInputField = new javax.swing.JTextField();
         txtDescription = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAddExpense = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnCategory = new javax.swing.JButton();
+        DateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 153));
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 28)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("BACK");
+        lblBack.setFont(new java.awt.Font("Calibri", 1, 28)); // NOI18N
+        lblBack.setForeground(new java.awt.Color(255, 255, 255));
+        lblBack.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBack.setText("Go Back");
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(lblBack, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(659, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(lblBack, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(644, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 720));
@@ -269,7 +279,27 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         });
         jPanel4.add(txtInputField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 420, 60));
 
-        jButton1.setText("ADD EXPENSE");
+        btnAddExpense.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAddExpense.setText("ADD EXPENSE");
+        btnAddExpense.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddExpenseActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Calibri", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel1.setText("Add Expense Description (Optional)");
+
+        btnCategory.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+        btnCategory.setText("Select a Category");
+        btnCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoryActionPerformed(evt);
+            }
+        });
+
+        DateChooser.setDateFormatString("dd-MMM-yyyy");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -279,9 +309,12 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
                 .addGap(68, 68, 68)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(127, 127, 127)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnAddExpense, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -293,9 +326,15 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(78, 78, 78)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddExpense, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(102, 102, 102))))
         );
 
@@ -315,8 +354,17 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
     private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
         // TODO add your handling code here:'
+        if(checkEmpty()){
+            JOptionPane.showMessageDialog(null, "Please input a number first","Empty Field",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        
+        
         operator='-';
+        
         compute();
+        txtInputField.setText("-");
         //operator=txtInputField.getText().charAt(0);
     }//GEN-LAST:event_btnSubtractActionPerformed
 
@@ -327,6 +375,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         }
         operator='+';
         compute();
+        txtInputField.setText("+");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
@@ -337,30 +386,32 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         }
         operator='/';
         compute();
+        txtInputField.setText("/");
     }//GEN-LAST:event_btnDivideActionPerformed
 
     private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualActionPerformed
         // TODO add your handling code here:
+        replace();
         isSelected=false;
         isResult=true;
         switch (operator){
             case '+':
-                ans= num1+Integer.parseInt(txtInputField.getText());
+                ans= num1+Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans));
                 break;
                 
             case '-':
-                ans= num1-Integer.parseInt(txtInputField.getText());
+                ans= num1-Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans));
                 break;
                 
             case 'x':
-                ans= num1*Integer.parseInt(txtInputField.getText());
+                ans= num1*Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans));
                 break;
                 
             case '/':
-                ans= num1/Integer.parseInt(txtInputField.getText());
+                ans= num1/Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans)); 
                 System.out.printf("Value: %.2f", ans);
                 break;
@@ -466,7 +517,30 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         }
         operator='x';
         compute();
+        txtInputField.setText("x");
     }//GEN-LAST:event_btnMultiplyActionPerformed
+
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+        // TODO add your handling code here:
+        PersonalExpenseFrame personal=new PersonalExpenseFrame();
+        personal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblBackMouseClicked
+
+    private void btnCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryActionPerformed
+        // TODO add your handling code here:
+        this.disable();
+        CategorySelectionFrame categoryFrame=new CategorySelectionFrame();
+        categoryFrame.setVisible(true);
+    }//GEN-LAST:event_btnCategoryActionPerformed
+
+    private void btnAddExpenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExpenseActionPerformed
+        // TODO add your handling code here:
+        SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
+        String date=dformat.format(DateChooser.getDate());
+        System.out.println(date);
+        
+    }//GEN-LAST:event_btnAddExpenseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,6 +578,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateChooser;
     private javax.swing.JButton btn0;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
@@ -516,17 +591,19 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAddExpense;
+    private javax.swing.JButton btnCategory;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDivide;
     private javax.swing.JButton btnEqual;
     private javax.swing.JButton btnMultiply;
     private javax.swing.JButton btnSubtract;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblBack;
     private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtInputField;
     // End of variables declaration//GEN-END:variables
@@ -547,4 +624,39 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         }
         return false;
     }
+
+   
+    
+    
+    private void replace() {
+        
+        switch (operator){
+            case '+':
+                temp=txtInputField.getText();
+                temp=temp.replaceAll("\\+","");
+                break;
+                
+            case '-':
+                temp=txtInputField.getText();
+                temp=temp.replaceAll("\\-","");
+                break;
+                
+            case 'x':
+                temp=txtInputField.getText();
+                temp=temp.replaceAll("x","");
+                break;
+                
+            case '/':
+                temp=txtInputField.getText();
+                temp=temp.replaceAll("/","");
+                break;
+                //System.out.printf("Value: %.2f", ans);
+                
+        
+        
+    }   
+    
+    
+    
+}
 }
