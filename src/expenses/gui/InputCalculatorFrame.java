@@ -6,6 +6,7 @@
 package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
+import expenses.pojo.GlobalData;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
@@ -529,9 +530,14 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
     private void btnCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryActionPerformed
         // TODO add your handling code here:
-        this.disable();
+        GlobalData.categorySelected=false;
         CategorySelectionFrame categoryFrame=new CategorySelectionFrame();
         categoryFrame.setVisible(true);
+        while(!(GlobalData.isCategorySelected())){
+            this.disable();
+        }
+        this.enable();
+        
     }//GEN-LAST:event_btnCategoryActionPerformed
 
     private void btnAddExpenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExpenseActionPerformed

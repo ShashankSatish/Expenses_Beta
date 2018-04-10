@@ -20,7 +20,7 @@ public class DBConnExp {
     static{
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            conn=DriverManager.getConnection("jdbc:oracle:thin:@//utkarshchidar:1521/xe","expense","minor");
+            conn=DriverManager.getConnection("jdbc:oracle:thin:@//LAPTOP-BHPGLS9F:1521/xe","expense","minor");
             //JOptionPane.showMessageDialog(null,"Connected to the Database successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
         }
         catch(Exception ex) {
