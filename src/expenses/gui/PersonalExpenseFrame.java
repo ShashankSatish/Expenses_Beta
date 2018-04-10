@@ -5,8 +5,6 @@
  */
 package expenses.gui;
 
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -117,7 +115,12 @@ public class PersonalExpenseFrame extends javax.swing.JFrame {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAdd.setText("ADD");
-        jPanel5.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, -1, -1));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 143, -1, 30));
 
         btnModifyBudget.setText("MODIFY BUDGET");
         jPanel5.add(btnModifyBudget, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
@@ -136,6 +139,13 @@ public class PersonalExpenseFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_lblClose1MouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        InputCalculatorFrame cal= new InputCalculatorFrame();
+        cal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
