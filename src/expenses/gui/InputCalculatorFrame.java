@@ -28,24 +28,28 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     double num1,ans;
     boolean isSelected=false;
     boolean isResult=false;
-    String temp,date="",calResult="",desc="";
+    String temp,calResult,desc;
+    String category,date,descript;
+    Double amount;
+    
     public InputCalculatorFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
         //btnCategory.setText(GlobalData.getCategory());
     }
-    public InputCalculatorFrame(String cCat,String cDate,String cResult,String cDesc){
+    public InputCalculatorFrame(String cCat,String cResult,String cDesc){
         this();
         btnCategory.setText(cCat);
         txtDesc.setText(cDesc);
         txtInputField.setText(cResult);
-        try {
+        /*try {
             Date date1=new SimpleDateFormat().parse(cDate);
             DateChooser.setDate(date1);
             //DateChooser.setDate();
         } catch (ParseException ex) {
             Logger.getLogger(InputCalculatorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,6 +91,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -306,17 +311,25 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         });
         jPanel4.add(txtInputField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 420, 60));
 
-        txtDesc.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+        txtDesc.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        txtDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescActionPerformed(evt);
+            }
+        });
 
-        btnAddExpense.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        btnAddExpense.setBackground(new java.awt.Color(0, 0, 204));
+        btnAddExpense.setFont(new java.awt.Font("Comic Sans MS", 1, 28)); // NOI18N
+        btnAddExpense.setForeground(new java.awt.Color(255, 255, 255));
         btnAddExpense.setText("ADD EXPENSE");
+        btnAddExpense.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddExpense.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddExpenseActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 20)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 153));
         jLabel1.setText("Description (Optional) :");
 
@@ -331,7 +344,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         DateChooser.setDateFormatString("dd-MMM-yyyy");
         DateChooser.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 0, 153));
         jLabel2.setText("Date of Transaction :");
 
@@ -340,37 +353,56 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("New Expense");
 
-        jLabel4.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 0, 153));
         jLabel4.setText("Amount you spent :");
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel5.setText("Category:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(400, 400, 400)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(400, 400, 400)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(123, 123, 123)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel4)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(127, 127, 127)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addComponent(btnAddExpense, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(DateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(60, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnAddExpense, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jLabel2)))
+                                .addGap(96, 96, 96))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(317, 317, 317))))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,23 +411,26 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
+                        .addGap(31, 31, 31)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(btnAddExpense, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnAddExpense, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(35, 35, 35))
         );
 
@@ -419,9 +454,6 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please input a number first","Empty Field",JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        
-        
         operator='-';
         
         compute();
@@ -591,37 +623,60 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     private void btnCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryActionPerformed
         // TODO add your handling code here:
         
-        
         calResult=txtInputField.getText();
        // date=DateChooser.getDate().toString();
         desc=txtDesc.getText();
         
-        
         //GlobalData.setCategorySelected(false);
-        CategorySelectionFrame categoryFrame=new CategorySelectionFrame(date,calResult,desc);
+        CategorySelectionFrame categoryFrame=new CategorySelectionFrame(calResult,desc);
         categoryFrame.setVisible(true);
         this.setVisible(false);
-        /* while(!(GlobalData.isCategorySelected())){
-         
-         
-             System.out.println("Inside while loop");
-        }*/
-        //this.setVisible(true);
-        
     }//GEN-LAST:event_btnCategoryActionPerformed
 
     private void btnAddExpenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExpenseActionPerformed
         // TODO add your handling code here:
-        SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
-        date=dformat.format(DateChooser.getDate());
+        category=btnCategory.getText();
+        descript=txtDesc.getText();
+        
+        
+        
+        if(!(txtInputField.getText().isEmpty())){
+            amount=Double.parseDouble(txtInputField.getText().toString());
+            if(!(category.equals("Select a Category"))){
+                if(DateChooser.getDate()!=null){
+                    SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
+                    date=dformat.format(DateChooser.getDate());
+                    System.out.println("Information Entered:\nAmount: "+amount+"\nDate: "+date+"\nCategory: "+category+"\nDescription: "+descript);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Please enter the Date of Spending","Enter Date!",JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Please select a Category first","Enter Category!",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please enter your Expenditure","Enter Amount Spent!",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        /*SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
+        date=dformat.format(DateChooser.getDate());*/
       
-       System.out.println(date);
+       //System.out.println(date);
         
     }//GEN-LAST:event_btnAddExpenseActionPerformed
 
     private void txtInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtInputFieldActionPerformed
+
+    private void txtDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescActionPerformed
 
     /**
      * @param args the command line arguments
@@ -683,6 +738,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
