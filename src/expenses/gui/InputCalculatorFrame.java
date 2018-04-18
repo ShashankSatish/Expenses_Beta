@@ -7,8 +7,13 @@ package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
 import expenses.pojo.GlobalData;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -23,12 +28,25 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     double num1,ans;
     boolean isSelected=false;
     boolean isResult=false;
-    String temp;
+    String temp,date="",calResult="",desc="";
     public InputCalculatorFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
+        //btnCategory.setText(GlobalData.getCategory());
     }
-
+    public InputCalculatorFrame(String cCat,String cDate,String cResult,String cDesc){
+        this();
+        btnCategory.setText(cCat);
+        txtDesc.setText(cDesc);
+        txtInputField.setText(cResult);
+        try {
+            Date date1=new SimpleDateFormat().parse(cDate);
+            DateChooser.setDate(date1);
+            //DateChooser.setDate();
+        } catch (ParseException ex) {
+            Logger.getLogger(InputCalculatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,11 +79,14 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btn6 = new javax.swing.JButton();
         txtInputField = new javax.swing.JTextField();
-        txtDescription = new javax.swing.JTextField();
+        txtDesc = new javax.swing.JTextField();
         btnAddExpense = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnCategory = new javax.swing.JButton();
         DateChooser = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -86,20 +107,20 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addComponent(lblBack, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(lblBack, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(644, Short.MAX_VALUE))
+                .addContainerGap(646, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 720));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 720));
 
         jPanel2.setBackground(new java.awt.Color(51, 0, 102));
         jPanel2.setForeground(new java.awt.Color(51, 0, 102));
@@ -108,14 +129,14 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1126, Short.MAX_VALUE)
+            .addGap(0, 1120, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 80, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 0, -1, 80));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 1120, 80));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -273,14 +294,21 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         txtInputField.setEditable(false);
         txtInputField.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         txtInputField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtInputField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtInputFieldActionPerformed(evt);
+            }
+        });
         txtInputField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtInputFieldKeyTyped(evt);
             }
         });
-        jPanel4.add(txtInputField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 420, 60));
+        jPanel4.add(txtInputField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 420, 60));
 
-        btnAddExpense.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtDesc.setFont(new java.awt.Font("Calibri Light", 1, 22)); // NOI18N
+
+        btnAddExpense.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         btnAddExpense.setText("ADD EXPENSE");
         btnAddExpense.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,7 +318,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 153));
-        jLabel1.setText("Add Expense Description (Optional)");
+        jLabel1.setText("Description (Optional) :");
 
         btnCategory.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
         btnCategory.setText("Select a Category");
@@ -301,45 +329,77 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         });
 
         DateChooser.setDateFormatString("dd-MMM-yyyy");
+        DateChooser.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel2.setText("Date of Transaction :");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("New Expense");
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 153));
+        jLabel4.setText("Amount you spent :");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnAddExpense, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(DateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(400, 400, 400)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(123, 123, 123)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(127, 127, 127)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addComponent(btnAddExpense, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(DateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(133, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel3)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(DateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(btnCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)
-                        .addComponent(btnAddExpense, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(102, 102, 102))))
+                        .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnAddExpense, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 1120, 640));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 1090, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -530,23 +590,38 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
     private void btnCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryActionPerformed
         // TODO add your handling code here:
-        GlobalData.categorySelected=false;
-        CategorySelectionFrame categoryFrame=new CategorySelectionFrame();
+        
+        
+        calResult=txtInputField.getText();
+       // date=DateChooser.getDate().toString();
+        desc=txtDesc.getText();
+        
+        
+        //GlobalData.setCategorySelected(false);
+        CategorySelectionFrame categoryFrame=new CategorySelectionFrame(date,calResult,desc);
         categoryFrame.setVisible(true);
-        while(!(GlobalData.isCategorySelected())){
-            this.disable();
-        }
-        this.enable();
+        this.setVisible(false);
+        /* while(!(GlobalData.isCategorySelected())){
+         
+         
+             System.out.println("Inside while loop");
+        }*/
+        //this.setVisible(true);
         
     }//GEN-LAST:event_btnCategoryActionPerformed
 
     private void btnAddExpenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExpenseActionPerformed
         // TODO add your handling code here:
         SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
-        String date=dformat.format(DateChooser.getDate());
-        System.out.println(date);
+        date=dformat.format(DateChooser.getDate());
+      
+       System.out.println(date);
         
     }//GEN-LAST:event_btnAddExpenseActionPerformed
+
+    private void txtInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtInputFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -605,12 +680,15 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnMultiply;
     private javax.swing.JButton btnSubtract;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblBack;
-    private javax.swing.JTextField txtDescription;
+    private javax.swing.JTextField txtDesc;
     private javax.swing.JTextField txtInputField;
     // End of variables declaration//GEN-END:variables
 
