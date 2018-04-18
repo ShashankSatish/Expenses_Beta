@@ -30,7 +30,8 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     boolean isResult=false;
     String temp,calResult,desc;
     String category,date,descript;
-    Double amount;
+    long amount;
+    //Date d;
     
     public InputCalculatorFrame() {
         initComponents();
@@ -638,14 +639,14 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         category=btnCategory.getText();
         descript=txtDesc.getText();
         
-        
-        
         if(!(txtInputField.getText().isEmpty())){
-            amount=Double.parseDouble(txtInputField.getText().toString());
+            Double x=Double.parseDouble(txtInputField.getText().toString());
+            amount=Math.round(x);
             if(!(category.equals("Select a Category"))){
                 if(DateChooser.getDate()!=null){
                     SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
                     date=dformat.format(DateChooser.getDate());
+                    //d=DateChooser.getDate();
                     System.out.println("Information Entered:\nAmount: "+amount+"\nDate: "+date+"\nCategory: "+category+"\nDescription: "+descript);
                 }
                 else{
