@@ -7,6 +7,7 @@ package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
 import expenses.pojo.GlobalData;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,18 +32,20 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     String temp,calResult,desc;
     String category,date,descript;
     long amount;
-    //Date d;
+    Date d;
     
     public InputCalculatorFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
         //btnCategory.setText(GlobalData.getCategory());
     }
-    public InputCalculatorFrame(String cCat,String cResult,String cDesc){
+    public InputCalculatorFrame(String cCat,String cResult,String cDesc,Date cDate){
         this();
         btnCategory.setText(cCat);
         txtDesc.setText(cDesc);
         txtInputField.setText(cResult);
+        DateChooser.setDate(cDate);
+        
         /*try {
             Date date1=new SimpleDateFormat().parse(cDate);
             DateChooser.setDate(date1);
@@ -626,11 +629,12 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         calResult=txtInputField.getText();
-       // date=DateChooser.getDate().toString();
+       //date=DateChooser.getDate().toString();
         desc=txtDesc.getText();
+        d=DateChooser.getDate();
         
         //GlobalData.setCategorySelected(false);
-        CategorySelectionFrame categoryFrame=new CategorySelectionFrame(calResult,desc);
+        CategorySelectionFrame categoryFrame=new CategorySelectionFrame(calResult,desc,d);
         categoryFrame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCategoryActionPerformed
@@ -647,8 +651,10 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
                 if(DateChooser.getDate()!=null){
                     SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
                     date=dformat.format(DateChooser.getDate());
-                    //d=DateChooser.getDate();
-                    System.out.println("Information Entered:\nAmount: "+amount+"\nDate: "+date+"\nCategory: "+category+"\nDescription: "+descript);
+                    d=DateChooser.getDate();
+                    //DateChooser.setDate(d);
+                    
+                    System.out.println("Information Entered:\nAmount: "+amount+"\nDate: "+date+"\nCategory: "+category+"\nDescription: "+descript+d);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Please enter the Date of Spending","Enter Date!",JOptionPane.INFORMATION_MESSAGE);
