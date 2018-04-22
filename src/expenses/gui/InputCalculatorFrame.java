@@ -6,7 +6,9 @@
 package expenses.gui;
 
 import com.sun.glass.events.KeyEvent;
+import expenses.dao.CategoriesDAO;
 import expenses.pojo.GlobalData;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +16,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -26,26 +27,27 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
      * Creates new form InputCalculatorFrame
      */
     char operator;
-    double num1,ans;
-    boolean isSelected=false;
-    boolean isResult=false;
-    String temp,calResult,desc;
-    String category,date,descript;
+    double num1, ans;
+    boolean isSelected = false;
+    boolean isResult = false;
+    String temp, calResult, desc, uid;
+    String category, date, descript;
     long amount;
     Date d;
-    
+
     public InputCalculatorFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
         //btnCategory.setText(GlobalData.getCategory());
     }
-    public InputCalculatorFrame(String cCat,String cResult,String cDesc,Date cDate){
+
+    public InputCalculatorFrame(String cCat, String cResult, String cDesc, Date cDate) {
         this();
         btnCategory.setText(cCat);
         txtDesc.setText(cDesc);
         txtInputField.setText(cResult);
         DateChooser.setDate(cDate);
-        
+
         /*try {
             Date date1=new SimpleDateFormat().parse(cDate);
             DateChooser.setDate(date1);
@@ -53,8 +55,9 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(InputCalculatorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
+         */
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -446,43 +449,43 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn3.getText());
+        txtInputField.setText(txtInputField.getText() + btn3.getText());
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
         // TODO add your handling code here:'
-        if(checkEmpty()){
-            JOptionPane.showMessageDialog(null, "Please input a number first","Empty Field",JOptionPane.ERROR_MESSAGE);
+        if (checkEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input a number first", "Empty Field", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        operator='-';
-        
+        operator = '-';
+
         compute();
         txtInputField.setText("-");
         //operator=txtInputField.getText().charAt(0);
     }//GEN-LAST:event_btnSubtractActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if(checkEmpty()){
-            JOptionPane.showMessageDialog(null, "Please input a number first","Empty Field",JOptionPane.ERROR_MESSAGE);
+        if (checkEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input a number first", "Empty Field", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        operator='+';
+        operator = '+';
         compute();
         txtInputField.setText("+");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
         // TODO add your handling code here:
-        if(checkEmpty()){
-            JOptionPane.showMessageDialog(null, "Please input a number first","Empty Field",JOptionPane.ERROR_MESSAGE);
+        if (checkEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input a number first", "Empty Field", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        operator='/';
+        operator = '/';
         compute();
         txtInputField.setText("/");
     }//GEN-LAST:event_btnDivideActionPerformed
@@ -490,27 +493,27 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualActionPerformed
         // TODO add your handling code here:
         replace();
-        isSelected=false;
-        isResult=true;
-        switch (operator){
+        isSelected = false;
+        isResult = true;
+        switch (operator) {
             case '+':
-                ans= num1+Integer.parseInt(temp);
+                ans = num1 + Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans));
                 break;
-                
+
             case '-':
-                ans= num1-Integer.parseInt(temp);
+                ans = num1 - Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans));
                 break;
-                
+
             case 'x':
-                ans= num1*Integer.parseInt(temp);
+                ans = num1 * Integer.parseInt(temp);
                 txtInputField.setText(Double.toString(ans));
                 break;
-                
+
             case '/':
-                ans= num1/Integer.parseInt(temp);
-                txtInputField.setText(Double.toString(ans)); 
+                ans = num1 / Integer.parseInt(temp);
+                txtInputField.setText(Double.toString(ans));
                 System.out.printf("Value: %.2f", ans);
                 break;
         }
@@ -518,10 +521,10 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
     private void txtInputFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInputFieldKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-            if(!(Character.isDigit(c))||c==KeyEvent.VK_BACKSPACE||c==KeyEvent.VK_DELETE){
-                evt.consume();
-            }
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)) || c == KeyEvent.VK_BACKSPACE || c == KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtInputFieldKeyTyped
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -531,151 +534,167 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn1.getText());
+        txtInputField.setText(txtInputField.getText() + btn1.getText());
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn2.getText());
+        txtInputField.setText(txtInputField.getText() + btn2.getText());
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn4.getText());
+        txtInputField.setText(txtInputField.getText() + btn4.getText());
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn5.getText());
+        txtInputField.setText(txtInputField.getText() + btn5.getText());
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn6.getText());
+        txtInputField.setText(txtInputField.getText() + btn6.getText());
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn7.getText());
+        txtInputField.setText(txtInputField.getText() + btn7.getText());
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn8.getText());
+        txtInputField.setText(txtInputField.getText() + btn8.getText());
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
         // TODO add your handling code here:
-        if(isResult){
+        if (isResult) {
             txtInputField.setText("");
-            isResult=false;
+            isResult = false;
         }
-        txtInputField.setText(txtInputField.getText()+btn9.getText());
+        txtInputField.setText(txtInputField.getText() + btn9.getText());
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
         // TODO add your handling code here:
-        if(!(txtInputField.getText().isEmpty()))
-         txtInputField.setText(txtInputField.getText()+btn0.getText());   
+        if (!(txtInputField.getText().isEmpty())) {
+            txtInputField.setText(txtInputField.getText() + btn0.getText());
+        }
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplyActionPerformed
         // TODO add your handling code here:num1=Integer.parseInt(txtInputField.getText());
-        if(checkEmpty()){
-            JOptionPane.showMessageDialog(null, "Please input a number first","Empty Field",JOptionPane.ERROR_MESSAGE);
+        if (checkEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please input a number first", "Empty Field", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        operator='x';
+        operator = 'x';
         compute();
         txtInputField.setText("x");
     }//GEN-LAST:event_btnMultiplyActionPerformed
 
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
         // TODO add your handling code here:
-        PersonalExpenseFrame personal=new PersonalExpenseFrame();
+        PersonalExpenseFrame personal = new PersonalExpenseFrame();
         personal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void btnCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoryActionPerformed
         // TODO add your handling code here:
-        
-        calResult=txtInputField.getText();
-       //date=DateChooser.getDate().toString();
-        desc=txtDesc.getText();
-        d=DateChooser.getDate();
-        
+
+        calResult = txtInputField.getText();
+        //date=DateChooser.getDate().toString();
+        desc = txtDesc.getText();
+        d = DateChooser.getDate();
+
         //GlobalData.setCategorySelected(false);
-        CategorySelectionFrame categoryFrame=new CategorySelectionFrame(calResult,desc,d);
+        CategorySelectionFrame categoryFrame = new CategorySelectionFrame(calResult, desc, d);
         categoryFrame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnCategoryActionPerformed
 
     private void btnAddExpenseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddExpenseActionPerformed
         // TODO add your handling code here:
-        category=btnCategory.getText();
-        descript=txtDesc.getText();
-        
-        if(!(txtInputField.getText().isEmpty())){
-            Double x=Double.parseDouble(txtInputField.getText().toString());
-            amount=Math.round(x);
-            if(!(category.equals("Select a Category"))){
-                if(DateChooser.getDate()!=null){
-                    SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
-                    date=dformat.format(DateChooser.getDate());
-                    d=DateChooser.getDate();
-                    //DateChooser.setDate(d);
-                    
-                    System.out.println("Information Entered:\nAmount: "+amount+"\nDate: "+date+"\nCategory: "+category+"\nDescription: "+descript+d);
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Please enter the Date of Spending","Enter Date!",JOptionPane.INFORMATION_MESSAGE);
+        category = btnCategory.getText();
+        descript = txtDesc.getText();
+
+        if (!(txtInputField.getText().isEmpty())) {
+            Double x = Double.parseDouble(txtInputField.getText().toString());
+            amount = Math.round(x);
+            if (!(category.equals("Select a Category"))) {
+                if (DateChooser.getDate() != null) {
+                    SimpleDateFormat dformat = new SimpleDateFormat("dd-MMM-yyyy");
+                    date = dformat.format(DateChooser.getDate());
+                    d = DateChooser.getDate();
+
+                    uid = "sonu123";
+                     int temp11=(int)amount;
+                    //take from USERLOGINFRAME
+
+                    System.out.println("Information Entered:\nAmount: " + amount + "\nDate: " + date + "\nCategory: " + category + "\nDescription: " + descript + d);
+                    try {
+                        System.out.println(category.toUpperCase());
+                        boolean res = CategoriesDAO.addCategoryExpense(uid, category.toUpperCase(),temp11);
+                        
+
+                        if (res) {
+                            JOptionPane.showMessageDialog(null, "Record entered succesfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+
+                        }
+                        JOptionPane.showMessageDialog(null, "Not inserted", "Unsuccesful", JOptionPane.INFORMATION_MESSAGE);
+
+                    } catch (SQLException ex) {
+
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please enter the Date of Spending", "Enter Date!", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Please select a Category first","Enter Category!",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a Category first", "Enter Category!", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Please enter your Expenditure","Enter Amount Spent!",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter your Expenditure", "Enter Amount Spent!", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
+
         /*SimpleDateFormat dformat= new SimpleDateFormat("dd-MMM-yyyy");
         date=dformat.format(DateChooser.getDate());*/
-      
-       //System.out.println(date);
-        
+        //System.out.println(date);
+
     }//GEN-LAST:event_btnAddExpenseActionPerformed
 
     private void txtInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputFieldActionPerformed
@@ -757,54 +776,47 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void compute() {
-        if(isSelected){
-            JOptionPane.showMessageDialog(null, "Please press '=' before proceeding","SQL Exception",JOptionPane.ERROR_MESSAGE);
+        if (isSelected) {
+            JOptionPane.showMessageDialog(null, "Please press '=' before proceeding", "SQL Exception", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        isSelected=true;
-        num1=Double.parseDouble(txtInputField.getText());
+        isSelected = true;
+        num1 = Double.parseDouble(txtInputField.getText());
         txtInputField.setText("");
     }
 
     private boolean checkEmpty() {
-        if(txtInputField.getText().isEmpty()){
+        if (txtInputField.getText().isEmpty()) {
             return true;
         }
         return false;
     }
 
-   
-    
-    
     private void replace() {
-        
-        switch (operator){
+
+        switch (operator) {
             case '+':
-                temp=txtInputField.getText();
-                temp=temp.replaceAll("\\+","");
+                temp = txtInputField.getText();
+                temp = temp.replaceAll("\\+", "");
                 break;
-                
+
             case '-':
-                temp=txtInputField.getText();
-                temp=temp.replaceAll("\\-","");
+                temp = txtInputField.getText();
+                temp = temp.replaceAll("\\-", "");
                 break;
-                
+
             case 'x':
-                temp=txtInputField.getText();
-                temp=temp.replaceAll("x","");
+                temp = txtInputField.getText();
+                temp = temp.replaceAll("x", "");
                 break;
-                
+
             case '/':
-                temp=txtInputField.getText();
-                temp=temp.replaceAll("/","");
+                temp = txtInputField.getText();
+                temp = temp.replaceAll("/", "");
                 break;
-                //System.out.printf("Value: %.2f", ans);
-                
-        
-        
-    }   
-    
-    
-    
-}
+            //System.out.printf("Value: %.2f", ans);
+
+        }
+
+    }
 }
