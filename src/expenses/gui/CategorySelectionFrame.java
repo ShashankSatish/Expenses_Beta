@@ -6,6 +6,7 @@
 package expenses.gui;
 
 import expenses.pojo.GlobalData;
+import java.util.Date;
 
 /**
  *
@@ -18,16 +19,17 @@ public class CategorySelectionFrame extends javax.swing.JFrame {
      */
     String cCat,cResult,cDesc;
     //String cDate;
+    Date cDate;
     
     public CategorySelectionFrame() {
         initComponents();
         super.setLocationRelativeTo(null);
     }
     
-    public CategorySelectionFrame(String calResult,String desc) {
+    public CategorySelectionFrame(String calResult,String desc,Date date) {
       
         this();
-        //cDate=date;
+        cDate=date;
         cResult=calResult;
         cDesc=desc;
         
@@ -535,7 +537,7 @@ public class CategorySelectionFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void openCalculator() {
-        InputCalculatorFrame frame=new InputCalculatorFrame(cCat,cResult,cDesc);
+        InputCalculatorFrame frame=new InputCalculatorFrame(cCat,cResult,cDesc,cDate);
         frame.setVisible(true);
         this.dispose();
     }

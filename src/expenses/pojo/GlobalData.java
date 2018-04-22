@@ -11,6 +11,15 @@ package expenses.pojo;
  */
 public class GlobalData {
     public static boolean categorySelected;
+    public static String category;
+
+    public static String getCategory() {
+        return category;
+    }
+
+    public static void setCategory(String category) {
+        GlobalData.category = category;
+    }
 
     public static boolean isCategorySelected() {
         return categorySelected;
