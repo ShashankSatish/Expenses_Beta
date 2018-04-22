@@ -323,6 +323,7 @@ public class InputCalculatorFrame extends javax.swing.JFrame {
         btnAddExpense.setFont(new java.awt.Font("Comic Sans MS", 1, 28)); // NOI18N
         btnAddExpense.setForeground(new java.awt.Color(255, 255, 255));
         btnAddExpense.setText("ADD EXPENSE");
+        btnAddExpense.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAddExpense.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddExpense.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
